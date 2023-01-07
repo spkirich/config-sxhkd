@@ -19,3 +19,7 @@ repo contains its configuration file and some related scripts.
 - A tool to take screenshots: [scrot](https://github.com/dreamer/scrot).
 - A nerd font:
   [Iosevka](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Iosevka).
+
+## To do
+
+- Replace rofi with dmenu.
