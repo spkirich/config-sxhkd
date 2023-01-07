@@ -1,0 +1,168 @@
+# Launch a terminal emulator.
+
+super + Return
+    alacritty
+
+# Launch a file manager.
+
+super + n
+    pcmanfm
+
+# Launch a web browser.
+
+super + w
+    firefox
+
+# Launch my logout script.
+
+super + s
+     ~/.config/sxhkd/scripts/logout
+
+# Launch a program launcher.
+
+super + d
+    rofi -modi drun -show drun -line-padding 4 \
+        -columns 2 -padding 50 -hide-scrollbar -terminal alacritty \
+        -show-icons -font "Iosevka 12"
+
+# Launch a password manager.
+
+super + e
+    passmenu
+
+# Control the screen brightness.
+
+XF86MonBrightness{Up,Down}
+    brightnessctl set {+10%,10%-}
+
+# Control the sound volume.
+
+XF86Audio{Mute,LowerVolume,RaiseVolume}
+    pamixer {-t,-d 10,-i 10}
+
+# Control the music player daemon.
+
+XF86Audio{Play,Prev,Next}
+    mpc {toggle,prev,next}
+
+# Control the music player daemon.
+
+super + shift + {o,p}
+    mpc {prev,next}
+
+# Take a screenshot.
+
+Print
+    scrot "$HOME/pictures/screenshots/%Y-%m-%d-%H-%M-%S.png"
+
+# Restart sxhkd.
+
+super + Escape
+    pkill -USR1 -x sxhkd
+
+# Quit or restart bspwm.
+
+super + alt + {q,r}
+    bspc {quit,wm -r}
+
+# Close or kill the current window.
+
+super + {_,shift + }c
+    bspc node -{c,k}
+
+# Alternate between the tiled and monocle layout.
+
+super + m
+    bspc desktop -l next
+
+# Send the newest marked window to the newest preselected window.
+
+super + y
+    bspc node newest.marked.local -n newest.!automatic.local
+
+# Swap the current and the biggest windows.
+
+super + g
+    bspc node -s biggest.window
+
+# Set the current window state.
+
+super + ctrl + {t,p,s,f}
+    bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+# Set the current window flags.
+
+super + ctrl + {m,x,y,z}
+    bspc node -g {marked,locked,sticky,private}
+
+# Focus the window in the given direction.
+
+super + {_,shift + }{h,j,k,l}
+    bspc node -{f,s} {west,south,north,east}
+
+# Focus the window for the given path jump.
+
+super + {p,b,comma,period}
+    bspc node -f @{parent,brother,first,second}
+
+# Focus the next/previous window in the current desktop.
+
+super + {_,shift + } + Tab
+    bspc node -f {next,prev}.local.!hidden.window
+
+# Focus the next/previous desktop in the current monitor.
+
+super + bracket{left,right}
+    bspc desktop -f {prev,next}.local
+
+# Focus the last window/desktop.
+
+super + {_,shift +}0
+    bspc {node,desktop} -f last
+
+# Focus the older or newer node in the focus history.
+
+super + {o,i}
+    bspc wm -h off; \
+    bspc node {older,newer} -f; \
+    bspc wm -h on
+
+# Focus or send to the given desktop.
+
+super + {_,shift + }{1-8}
+    bspc {desktop -f,node -d} '^{1-8}'
+
+# Preselect the direction.
+
+super + ctrl + {h,j,k,l}
+    bspc node -p {west,south,north,east}
+
+# Preselect the ratio.
+
+super + ctrl + {1-9}
+    bspc node -o 0.{1-9}
+
+# Cancel the preselection for the focused window.
+
+super + ctrl + space
+    bspc node -p cancel
+
+# Cancel the preselection for the focused desktop.
+
+super + ctrl + shift + space
+    bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+# Axpand a window by moving one of its side outward.
+
+super + alt + {h,j,k,l}
+    bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# Contract a window by moving one of its side inward.
+
+super + alt + shift + {h,j,k,l}
+    bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# Move a floating window.
+
+super + {Left,Down,Up,Right}
+    bspc node -v {-20 0,0 20,0 -20,20 0}

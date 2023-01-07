@@ -1,0 +1,62 @@
+#! /bin/bash
+
+# Set a font to display the menu options. I like the Iosevka nerd font, but
+# it's a matter of taste.
+
+f="Iosevka:size=12"
+
+# Set the logout option text. A nerd font should be installed to display a
+# nice icon in it!
+
+l=" Logout"
+
+# Set the sleep option text. A nerd font should be installed to display a
+# nice icon in it!
+
+s=" Sleep"
+
+# Set the reboot option text. A nerd font should be installed to display a
+# nice icon in it!
+
+r=" Reboot"
+
+# Set the shutdown option text. A nerd font should be installed to display a
+# nice icon in it!
+
+p=" Shutdown"
+
+# End of the script configuration. Then goes the script itself. Abandon hope,
+# all ye who enter here!
+
+# Ask the user for an option with a menu. All the configuration parameters
+# are used right here!
+
+option=$(echo -e "$l\n$s\n$r\n$p" | dmenu -fn "$f")
+
+# Logout the session.
+
+if [[ $option == $l ]]
+then
+    bspc quit
+fi
+
+# Make the system sleep.
+
+if [[ $option == $s ]]
+then
+    systemctl suspend
+fi
+
+# Make the system reboot.
+
+if [[ $option == $r ]]
+then
+    systemctl reboot
+fi
+
+# Make the system shutdown.
+
+if [[ $option == $p ]]
+then
+    systemctl poweroff
+fi
